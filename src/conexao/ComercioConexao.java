@@ -4,18 +4,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ComercioConexao {
-	private static Connection conexao;
+	private static Connection conexao;//objeto mantém referencia a conexão criada
 	
-	public void ConexaoComercio() throws Exception
+	public ComercioConexao() throws Exception
 	{
 		try
 		{
 			if ( conexao != null && !conexao.isClosed()) 
 				return;
 			else
-			Class.forName("com.mysql.jbc.Driver");
-			conexao = DriverManager.getConnection(
-					"jbc:mysql://localhost/comercio","root","root");
+			Class.forName("com.mysql.jdbc.Driver");// registro do driver
+			conexao = DriverManager.getConnection(//(URL,user,password)
+					"jdbc:mysql://localhost:3306/Comercio","user","root");
 			conexao.setAutoCommit(false);
 			conexao.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 		}
