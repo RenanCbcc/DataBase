@@ -15,13 +15,13 @@ public class ComercioConexao {
 			else
 			Class.forName("com.mysql.jdbc.Driver");// registro do driver
 			conexao = DriverManager.getConnection(//(URL,user,password)
-					"jdbc:mysql://localhost:3306/Comercio","user","root");
+					"jdbc:mysql://localhost:3306/Comercio","user","root");//Verificar a porta!
 			conexao.setAutoCommit(false);
 			conexao.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 		}
 		catch(ClassNotFoundException cnf)
 		{
-			throw new Exception ("Driver não encontrado");
+			throw new Exception ("Driver não encontrado"+ cnf.getMessage());
 		}
 		
 		catch(SQLException sql)
