@@ -13,21 +13,24 @@ import java.sql.Statement;
 
 public class Consulta extends JFrame implements ActionListener{
 	private JPanel pnSul;
-	private JTextField tfGrade;
+	private JTable tbGrade;
 	private JButton btQuery;
 	
 	
 	public Consulta()
 	{
 		setTitle("Consultar Categoria");
-		setSize(300,100);
+		setSize(400,250);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		this.pnSul = new JPanel();
-		this.tfGrade = new JTextField();
-		this.btQuery = new JButton("Record");
+		this.tbGrade = new JTable(new DefaultTableModel());
+		this.btQuery = new JButton("Query");
+		this.btQuery.setMnemonic('C');
+		this.pnSul.add(this.btQuery);
 		
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(this.tfGrade, BorderLayout.CENTER);
+		getContentPane().add(new JScrollPane(this.tbGrade),BorderLayout.CENTER);
 		getContentPane().add(this.pnSul, BorderLayout.SOUTH);
 		
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,6 +43,41 @@ public class Consulta extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e)
 	{
+		try
+		{
+			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
+			Statement statement = BDComerce.getConexao().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM CATEGORIA ORDER BY DESCRICAO");
+			
+			Vector<String> colunas = new Vector<String>();
+			colunas.add("Código");
+			colunas.add("Descrição");
+			
+			Vector<Object> registros = new Vector<Object>();
+			
+			while(rs.next())
+				{
+				Vector<Object> linha = new Vector<Object>();
+				linha.add(rs.getInt(1));
+				linha.add(rs.getString(2));
+				registros.add(linha);
+				}
+			
+			rs.close();
+			statement.close();
+			
+			DefaultTableModel dtm = (DefaultTableModel)(this.tbGrade.getModel());
+			dtm.setDataVector(registros, colunas);
+			
+		}
+		
+		catch(Exception ex)
+		{
+			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			
+		}
 		
 	}
+	
+	
 }
