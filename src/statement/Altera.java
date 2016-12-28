@@ -73,10 +73,11 @@ public class Altera extends JFrame implements ActionListener {
 				return;
 			}
 			
-			showMessageDialog(this,"Registro alterado!","Sucesso",INFORMATION_MESSAGE);
-			
 			statement.close();
-			
+			showMessageDialog(this,"Registro alterado!","Sucesso",INFORMATION_MESSAGE);
+			this.tfCodigo.setValue(null);
+			this.tfDetail.setText("");
+			this.tfCodigo.requestFocus();
 			
 		}
 		
