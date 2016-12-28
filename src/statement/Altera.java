@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Vector;
 
 
 public class Altera extends JFrame implements ActionListener {
@@ -49,5 +52,40 @@ public class Altera extends JFrame implements ActionListener {
 		setLocation((int)(dm.width - dm.getWidth()/2),(int)(dm.height -  dm.getHeight())/2);
 		
 		this.btAlter.addActionListener(this);
+	}
 	
+	public void actionPerformed(ActionEvent e)
+	{
+		try
+		{
+			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
+			PreparedStatement statement = BDComerce.getConexao().prepareStatement(
+					"UPDATE CATEGORIA SET DESCRICAO = ? WHERE CODIGO = ?");
+			
+			statement.setString(1,this.tfDetail.getText());
+			statement.setInt(2, Integer.parseInt(this.tfDetail.getText()));
+			statement.executeUpdate();
+			BDComerce.confirmarTransacao();
+			
+			if(statement.getUpdateCount() == 0)
+			{
+				showMessageDialog(this,"Registro nao existe!","Erro",ERROR_MESSAGE);
+				return;
+			}
+			
+			showMessageDialog(this,"Registro alterado!","Sucesso",INFORMATION_MESSAGE);
+			
+			statement.close();
+			
+			
+		}
+		
+		catch(Exception ex)
+		{
+			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			
+		}
+		
+	}
+
 }
