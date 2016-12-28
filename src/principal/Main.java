@@ -1,9 +1,11 @@
 package principal;
-import conexao.ComercioConexao;
+import statement.Incluir;
+import conexao.ComercioConexao; 
 import static javax.swing.JOptionPane.*;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		// TODO Auto-generated method stub
 		try
 		{
@@ -19,7 +21,9 @@ public class Main {
 			
 		}
 		
-		System.exit(0);
+		new Incluir().setVisible(true);
+		
+		//System.exit(0);
 	}
 
 }

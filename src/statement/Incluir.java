@@ -37,13 +37,18 @@ public class Incluir extends JFrame implements ActionListener{
 	{
 		try
 		{
-			ComercioConexao BDComerce = new ComercioConexao();
+			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
 			PreparedStatement statement = BDComerce.getConexao().prepareStatement(
 					"INSERT INTO Categoria (Descricao) Values(?)",Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, this.tfDetail.getText());
-			statement.executeUpdate();
+			//O método estático prepareStatement() cria um obj usado para remeter o INSERT  
 			
-			BDComerce.confirmarTransacao();
+			statement.setString(1, this.tfDetail.getText());
+			//O metodo acima especifica o que Values(?) receberá
+			
+			statement.executeUpdate();
+			//O método acima ordena o envio e execução da instrução
+			
+			BDComerce.confirmarTransacao(); //Commit
 			
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
