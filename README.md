@@ -6,3 +6,6 @@
 2. Inclusões no BD
 3. Exclusões no BD
 4. Alterações no BD
+
+## Modelo Entidade-Relacionamento
+![GitHub Logo](/MYSQL/Comércio.png.png)
