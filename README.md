@@ -8,4 +8,4 @@
 4. Alterações no BD
 
 ## Modelo Entidade-Relacionamento
-![GitHub Logo](/MySQL/Comércio.png.png)
+![GitHub Logo](/MySQL/Comércio.png)
