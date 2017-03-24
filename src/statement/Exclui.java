@@ -13,8 +13,9 @@ public class Exclui extends JFrame implements ActionListener {
 	private JPanel pnSul;
 	private JFormattedTextField tfCodigo;
 	private JButton btDelete;
+	private Vinculo vinculo;
 	
-	public Exclui()
+	public Exclui(Vinculo BDComerce)
 	{
 		setTitle("Excluir Categoria");
 		setSize(200,100);
@@ -30,11 +31,42 @@ public class Exclui extends JFrame implements ActionListener {
 		getContentPane().add(this.tfCodigo, BorderLayout.CENTER);
 		getContentPane().add(this.pnSul, BorderLayout.SOUTH);
 		
+		this.vinculo = BDComerce;
+		
 	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		//Implemento depois
+		try
+		{
+			
+			PreparedStatement statement = vinculo.getConexao().prepareStatement(
+					"DELETE FROM CATEGORIA WHERE CODIGO = ?");
+			
+			statement.setInt(1,Integer.parseInt(this.tfCodigo.getText()));
+			statement.executeUpdate();
+			vinculo.confirmarTransacao();
+			
+			if(statement.getUpdateCount() == 0)
+			{
+				showMessageDialog(this,"Registro nao existe!","Erro",ERROR_MESSAGE);
+				return;
+			}
+			
+			statement.close();
+			
+			showMessageDialog(this,"Registro concluido!","Sucesso",INFORMATION_MESSAGE);
+			this.tfCodigo.setValue(null);
+			this.tfCodigo.requestFocus();
+			
+		}
+		
+		catch(Exception ex)
+		{
+			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			
+		}
+
 	}
 	
 }
