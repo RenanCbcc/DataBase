@@ -5,18 +5,19 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-import connection.Vinculo;
+import conection.Vinculo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Incluir extends JFrame implements ActionListener{
+public class Inclui extends JFrame implements ActionListener{
 	private JPanel pnSul;
 	private JTextField tfDetail;
 	private JButton btRecord;
+	private Vinculo vinculo;
 	
-	public Incluir()
+	public Inclui(Vinculo BDComerce)
 	{
 		setTitle("Incluir Categoria");
 		setSize(300,100);
@@ -31,7 +32,7 @@ public class Incluir extends JFrame implements ActionListener{
 		
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((int)(dm.width - dm.getWidth()/2),(int)(dm.height -  dm.getHeight())/2);
-		
+		this.vinculo = BDComerce;
 		this.btRecord.addActionListener(this);
 		
 	}
@@ -40,18 +41,18 @@ public class Incluir extends JFrame implements ActionListener{
 	{
 		try
 		{
-			Vinculo BDComerce = new Vinculo();//Estabele uma conex„o
-			PreparedStatement statement = BDComerce.getConexao().prepareStatement(
+			
+			PreparedStatement statement = vinculo.getConexao().prepareStatement(
 					"INSERT INTO Categoria (Descricao) Values(?)",Statement.RETURN_GENERATED_KEYS);
-			//O mÈtodo est·tico prepareStatement() cria um obj usado para remeter o INSERT  
+			//O m√©todo est√°tico prepareStatement() cria um obj usado para remeter o INSERT  
 			
 			statement.setString(1, this.tfDetail.getText());
-			//O metodo acima especifica o que Values(?) receber·
+			//O metodo acima especifica o que Values(?) receber√°
 			
 			statement.executeUpdate();
-			//O mÈtodo acima ordena o envio e execuÁ„o da instruÁ„o
+			//O m√©todo acima ordena o envio e execu√ß√£o da instru√ß√£o
 			
-			BDComerce.confirmarTransacao(); //Commit
+			vinculo.confirmarTransacao(); //Commit
 			
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
