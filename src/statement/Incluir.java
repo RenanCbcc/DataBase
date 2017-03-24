@@ -1,9 +1,12 @@
 package statement;
 import static javax.swing.JOptionPane.*;
-import conexao.ComercioConexao;
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+
+import connection.Vinculo;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -37,7 +40,7 @@ public class Incluir extends JFrame implements ActionListener{
 	{
 		try
 		{
-			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
+			Vinculo BDComerce = new Vinculo();//Estabele uma conexão
 			PreparedStatement statement = BDComerce.getConexao().prepareStatement(
 					"INSERT INTO Categoria (Descricao) Values(?)",Statement.RETURN_GENERATED_KEYS);
 			//O método estático prepareStatement() cria um obj usado para remeter o INSERT  

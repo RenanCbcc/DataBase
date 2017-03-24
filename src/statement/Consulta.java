@@ -1,12 +1,15 @@
 package statement;
 
 import static javax.swing.JOptionPane.*;
-import conexao.ComercioConexao;
+
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import connection.Vinculo;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -45,7 +48,7 @@ public class Consulta extends JFrame implements ActionListener{
 	{
 		try
 		{
-			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
+			Vinculo BDComerce = new Vinculo();//Estabele uma conexão
 			Statement statement = BDComerce.getConexao().createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM CATEGORIA ORDER BY DESCRICAO");
 			

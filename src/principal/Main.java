@@ -1,7 +1,9 @@
 package principal;
 import statement.Incluir;
-import conexao.ComercioConexao; 
+
 import static javax.swing.JOptionPane.*;
+
+import connection.Vinculo;
 public class Main {
 
 	public static void main(String[] args) 
@@ -9,7 +11,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		try
 		{
-			ComercioConexao c = new ComercioConexao();
+			Vinculo c = new Vinculo();
 			showMessageDialog(null,"Conexão Aberta!");
 			c.fechar();
 			showMessageDialog(null,"Conexão Fechada!");

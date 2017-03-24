@@ -1,12 +1,12 @@
-package conexao;
+package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ComercioConexao {
+public class Vinculo {
 	private static Connection conexao;//objeto mantém referencia a conexão criada
 	
-	public ComercioConexao() throws Exception
+	public Vinculo() throws Exception
 	{
 		try
 		{

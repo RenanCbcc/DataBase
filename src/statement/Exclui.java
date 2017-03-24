@@ -1,9 +1,12 @@
 package statement;
 import static javax.swing.JOptionPane.*;
-import conexao.ComercioConexao;
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+
+import connection.Vinculo;
+
 import java.sql.PreparedStatement;
 
 public class Exclui extends JFrame implements ActionListener {

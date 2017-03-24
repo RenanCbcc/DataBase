@@ -1,15 +1,11 @@
 package statement;
 import static javax.swing.JOptionPane.*;
-import conexao.ComercioConexao;
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
+import connection.Vinculo;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Vector;
 
 
 public class Altera extends JFrame implements ActionListener {
@@ -19,8 +15,9 @@ public class Altera extends JFrame implements ActionListener {
 	private JFormattedTextField tfCodigo;
 	private JTextField tfDetail;
 	private JButton btAlter;
+	private Vinculo vinculo;
 	
-	public Altera()
+	public Altera(Vinculo BDComerce)
 	{
 		setTitle("Alterar Categoria");
 		setSize(300,150);
@@ -50,22 +47,22 @@ public class Altera extends JFrame implements ActionListener {
 		
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((int)(dm.width - dm.getWidth()/2),(int)(dm.height -  dm.getHeight())/2);
-		
+		this.vinculo = BDComerce;
 		this.btAlter.addActionListener(this);
 	}
 	
-	public void actionPerformed(ActionEvent e)
+	public void actionPerformed(ActionEvent e) 
 	{
 		try
 		{
-			ComercioConexao BDComerce = new ComercioConexao();//Estabele uma conexão
-			PreparedStatement statement = BDComerce.getConexao().prepareStatement(
+			
+			PreparedStatement statement = vinculo.getConexao().prepareStatement(
 					"UPDATE CATEGORIA SET DESCRICAO = ? WHERE CODIGO = ?");
 			
 			statement.setString(1,this.tfDetail.getText());
 			statement.setInt(2, Integer.parseInt(this.tfDetail.getText()));
 			statement.executeUpdate();
-			BDComerce.confirmarTransacao();
+			vinculo.confirmarTransacao();
 			
 			if(statement.getUpdateCount() == 0)
 			{
