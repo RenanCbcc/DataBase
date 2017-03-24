@@ -10,5 +10,5 @@
 ## Modelo Entidade-Relacionamento
 ![GitHub Logo](/MySQL/Comércio.png)
 ## Interface Gráfica
-![GitHub Logo](/MySQL/dbExplorer.png)
+![GitHub Logo](/MySQL/bdExplorer.png)
 
