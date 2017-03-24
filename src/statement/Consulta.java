@@ -18,9 +18,9 @@ public class Consulta extends JFrame implements ActionListener{
 	private JPanel pnSul;
 	private JTable tbGrade;
 	private JButton btQuery;
+	private Vinculo vinculo;
 	
-	
-	public Consulta()
+	public Consulta(Vinculo BDcomerce)
 	{
 		setTitle("Consultar Categoria");
 		setSize(400,250);
@@ -39,6 +39,7 @@ public class Consulta extends JFrame implements ActionListener{
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((int)(dm.width - dm.getWidth()/2),(int)(dm.height -  dm.getHeight())/2);
 		
+		this.vinculo = BDcomerce;
 		this.btQuery.addActionListener(this);
 		
 	}
@@ -48,8 +49,8 @@ public class Consulta extends JFrame implements ActionListener{
 	{
 		try
 		{
-			Vinculo BDComerce = new Vinculo();//Estabele uma conexão
-			Statement statement = BDComerce.getConexao().createStatement();
+			
+			Statement statement = vinculo.getConexao().createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM CATEGORIA ORDER BY DESCRICAO");
 			
 			Vector<String> colunas = new Vector<String>();
