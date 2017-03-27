@@ -1,4 +1,4 @@
-# DataBase
+# DataBase [![Build Status](https://travis-ci.org/RenanCbcc/DataBase.svg?branch=master)](https://travis-ci.org/RenanCbcc/DataBase)
 ## Banco de dados MySQL implementado em Java para disciplina Banco de Dados II, UFPA.
 ## O que a aplicação faz?
 ### O básico: 
