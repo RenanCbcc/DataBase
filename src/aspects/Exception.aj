@@ -1,26 +1,31 @@
 package aspects;
 
-import connection.Vinculo;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
+import conection.Vinculo;
+import principal.Grade;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public aspect Exception {
+public aspect Exceptions {
 
-	pointcut SQLexception():call(* Vinculo.*(..));
-	
-	
-	after() throwing (ClassNotFoundException cnf):
-	call(* Vinculo.*(..))
+	public pointcut SQLexception(): execution (* Vinculo.*(..));
+
+	public pointcut CNFexception():execution( Vinculo.new(..));
+
+
+	after() throwing (ClassNotFoundException cnf): CNFexception()
 	{
 		JOptionPane.showMessageDialog(null, cnf.getMessage(), "Erro", 0);
 	}
 
-	after() throwing (SQLException sqle):
-	call( *  Vinculo.*(..))
+	after() throwing (SQLException sqle): SQLexception() // pointcut named 
 	{
 		JOptionPane.showMessageDialog(null, sqle.getMessage(), "Erro", 0);
 	}
+	
+	after() throwing (SQLException sqle): execution ( Grade.new(..)) // pointcut anonimo 
+	{
+		JOptionPane.showMessageDialog(null, sqle.getMessage(), "Erro", 0);
+	}
+
 
 }
