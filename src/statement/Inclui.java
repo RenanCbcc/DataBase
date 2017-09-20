@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-import conection.Vinculo;
+import connection.Vinculo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

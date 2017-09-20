@@ -5,7 +5,7 @@ import principal.Grade;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public aspect Exceptions {
+public aspect Exception {
 
 	
 	public pointcut CNFexception(): execution( Vinculo.new());
