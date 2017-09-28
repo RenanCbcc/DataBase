@@ -1,6 +1,6 @@
 package aspects;
 
-import conection.Vinculo;
+import connection.Vinculo;
 import principal.Grade;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;

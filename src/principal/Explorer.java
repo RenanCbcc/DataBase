@@ -82,7 +82,7 @@ public class Explorer extends JFrame implements ListSelectionListener, ItemListe
 		Excluir.addActionListener(this);
 
 		try {
-			abrirConexao();
+			openConnection();
 			DatabaseMetaData dbmd = vinculo.getConexao().getMetaData();
 			ResultSet bancos = dbmd.getCatalogs();
 
@@ -90,11 +90,11 @@ public class Explorer extends JFrame implements ListSelectionListener, ItemListe
 			while (bancos.next())
 				dlm.addElement(bancos.getString("TABLE_CAT"));
 		} catch (Exception ex) {
-			showMessageDialog(this, "Erro ocorrido: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
+			showMessageDialog(this, "Explorer Error: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
 		}
 	}
 
-	public void abrirConexao() {
+	public void openConnection() {
 		try {
 			this.vinculo = new Vinculo();
 			showMessageDialog(null, "Vinculo com Banco de Dados Estabelecida!");
@@ -106,26 +106,15 @@ public class Explorer extends JFrame implements ListSelectionListener, ItemListe
 
 	}
 
-	public void IncluirnoBD(ListSelectionEvent i) {
-		new Inclui(vinculo).setVisible(true);
-	}
-
-	public void ExcluirdoBD(ListSelectionEvent e) {
-		new Exclui(this.vinculo).setVisible(true);
-	}
-
-	public void ConsultadoBD(ListSelectionEvent c) {
+	public void ConsultadoBD() {
 		new Consulta(this.vinculo).setVisible(true);
 	}
 
-	public void AlteranoBD(ListSelectionEvent a) {
-		new Altera(this.vinculo).setVisible(true);
-	}
-
+	// Sempre que um novo bando de dados for selecionado
 	public void valueChanged(ListSelectionEvent e) {
 		try {
 			String banco = Bancos.getSelectedValue().toString();
-			abrirConexao();
+			openConnection();
 			DatabaseMetaData dbmd = vinculo.getConexao().getMetaData();
 			ResultSet rs_tabelas = dbmd.getTables(banco, null, null, null);
 
@@ -134,10 +123,11 @@ public class Explorer extends JFrame implements ListSelectionListener, ItemListe
 			while (rs_tabelas.next())
 				dcm.addElement(rs_tabelas.getString("TABLE_NAME"));
 		} catch (Exception ex) {
-			showMessageDialog(this, "Erro ocorrido: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
+			showMessageDialog(this, "valueChanged Error: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
 		}
 	}
 
+	// Sempre que uma tablea for selecionada
 	public void itemStateChanged(ItemEvent e) {
 		if (Tabs.getSelectedIndex() == -1)
 			return;
@@ -153,20 +143,33 @@ public class Explorer extends JFrame implements ListSelectionListener, ItemListe
 			while (rs_campos.next())
 				dcm.addElement(rs_campos.getString("COLUMN_NAME"));
 		} catch (Exception ex) {
-			showMessageDialog(this, "Erro ocorrido: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
+			showMessageDialog(this, "itemStateChanged Error: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
 		}
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent ae) {
 		try {
-			Statement stm = vinculo.getConexao().createStatement();
-			ResultSet rs = stm
-					.executeQuery("SELECT * FROM " + Tabs.getSelectedItem() + " ORDER BY " + Cpos.getSelectedItem());
-			Grade.setModel(new Grade(rs, null));
+			if (ae.getSource() == this.Consultar) {
+				Statement stm = vinculo.getConexao().createStatement();
+				ResultSet rs = stm.executeQuery(
+						"SELECT * FROM " + Tabs.getSelectedItem() + " ORDER BY " + Cpos.getSelectedItem());
+				Grade.setModel(new Grade(rs, null));
+			}
+			if (ae.getSource() == this.Incluir) {
+				new Inclui(vinculo).setVisible(true);
+			}
+
+			if (ae.getSource() == this.Excluir) {
+				new Exclui(this.vinculo).setVisible(true);
+			}
+
+			if (ae.getSource() == this.Alterar) {
+				new Altera(vinculo).setVisible(true);
+			}
+
 		} catch (Exception ex) {
-			showMessageDialog(this, "Erro ocorrido: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
+			showMessageDialog(this, "actionPerformed Error: " + ex.getMessage(), "Erro", ERROR_MESSAGE);
 		}
 	}
 
-	
 }

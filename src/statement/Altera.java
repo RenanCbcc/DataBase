@@ -32,8 +32,8 @@ public class Altera extends JFrame implements ActionListener {
 		this.btAlter.setMnemonic('A');
 		
 		this.pnOeste.setLayout(new GridLayout(2,1));
-		this.pnOeste.add(new JLabel("Codigo: "));
-		this.pnOeste.add(new JLabel("Descricao: "));
+		this.pnOeste.add(new JLabel("Código: "));
+		this.pnOeste.add(new JLabel("Descrição: "));
 		this.pnCentro.setLayout(new GridLayout(2,1));
 		this.pnCentro.add(tfCodigo);
 		this.pnCentro.add(tfDetail);
@@ -48,6 +48,7 @@ public class Altera extends JFrame implements ActionListener {
 		Dimension dm = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((int)(dm.width - dm.getWidth()/2),(int)(dm.height -  dm.getHeight())/2);
 		this.vinculo = BDComerce;
+		this.btAlter.setVisible(true);		
 		this.btAlter.addActionListener(this);
 	}
 	
@@ -59,7 +60,7 @@ public class Altera extends JFrame implements ActionListener {
 			PreparedStatement statement = vinculo.getConexao().prepareStatement(
 					"UPDATE CATEGORIA SET DESCRICAO = ? WHERE CODIGO = ?");
 			
-			statement.setString(1,this.tfDetail.getText());
+			statement.setString(1,this.tfDetail.getText().toString());
 			statement.setInt(2, Integer.parseInt(this.tfDetail.getText()));
 			statement.executeUpdate();
 			vinculo.confirmarTransacao();
@@ -80,7 +81,7 @@ public class Altera extends JFrame implements ActionListener {
 		
 		catch(Exception ex)
 		{
-			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			showMessageDialog(this,ex.getMessage(),"Altera Error",ERROR_MESSAGE);
 			
 		}
 		

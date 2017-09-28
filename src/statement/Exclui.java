@@ -63,7 +63,7 @@ public class Exclui extends JFrame implements ActionListener {
 		
 		catch(Exception ex)
 		{
-			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			showMessageDialog(this,ex.getMessage(),"Exclude Error",ERROR_MESSAGE);
 			
 		}
 

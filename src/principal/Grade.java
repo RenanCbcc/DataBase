@@ -23,90 +23,71 @@ public class Grade extends AbstractTableModel {
 
 		}
 	}
-	
-	public Grade(ResultSet rs, String[] titulos)throws SQLException {
+
+	public Grade(ResultSet rs, String[] titulos) throws SQLException {
 		this();
-		
-		
-		ResultSetMetaData  metadata = rs.getMetaData();
-		if (titulos != null)
-		{
-			for (int i = 0; i < titulos.length; i++)
-			{
+
+		ResultSetMetaData metadata = rs.getMetaData();
+		if (titulos != null) {
+			for (int i = 0; i < titulos.length; i++) {
 				colunas.add(titulos[i]);
-			}	
-			
+			}
+
+		} else {
+			for (int i = 1; i <= metadata.getColumnCount(); i++) {
+				colunas.add(metadata.getColumnLabel(i));
+			}
 		}
-			else
-			{
-				for (int i = 0; i < metadata.getColumnCount() ; i++)
-				{
-					colunas.add(metadata.getColumnLabel(i));
-				}
-			}
-		
-		while(rs.next())
-		{
+
+		while (rs.next()) {
 			ArrayList<Object> linha = new ArrayList<Object>();
-			for (int i = 0; i < metadata.getColumnCount() ; i++)
-			{
+			for (int i = 1; i <= metadata.getColumnCount(); i++) {
 				linha.add(rs.getObject(i));
-				
+
 			}
-			
+
 			linhas.add(linha);
 		}
-		
-		
+
 	}
 
-	public List<List<Object>> getLinhas()
-	{
+	public List<List<Object>> getLinhas() {
 		return linhas;
 	}
-	
-	public int getColumnCount()
-	{
+
+	public int getColumnCount() {
 		return colunas.size();
 	}
-	
-	public int getRowCount()
-	{
+
+	public int getRowCount() {
 		return linhas.size();
 	}
-	
-	public Object getValueAt(int linha,int coluna)
-	{
+
+	public Object getValueAt(int linha, int coluna) {
 		return linhas.get(linha).get(coluna);
 	}
 
-	public String getColumnName(int indice)
-	{
+	public String getColumnName(int indice) {
 		return colunas.get(indice);
 	}
-	
-	public boolean isCellEditable(int linha, int coluna)
-	{
+
+	public boolean isCellEditable(int linha, int coluna) {
 		return false;
 	}
-	
-	public Class getColumnClass(int coluna)
-	{
-		return getValueAt(0,coluna).getClass();
+
+	public Class getColumnClass(int coluna) {
+		return getValueAt(0, coluna).getClass();
 	}
-	
-	public void removeRow(int linha)
-	{
+
+	public void removeRow(int linha) {
 		linhas.remove(linha);
 	}
-	
-	public void insertRow(List<Object> linha)
-	{
+
+	public void insertRow(List<Object> linha) {
 		linhas.add(linha);
 	}
-	
-	public void clearLines()
-	{
+
+	public void clearLines() {
 		linhas.clear();
 	}
 }

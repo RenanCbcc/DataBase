@@ -1,18 +1,25 @@
 package statement;
 
-import static javax.swing.JOptionPane.*;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
 
-import java.awt.event.*;
-import java.awt.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
-
-import connection.Vinculo;
-
-import java.sql.PreparedStatement;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import connection.Vinculo;
 
 public class Consulta extends JFrame implements ActionListener{
 	private JPanel pnSul;
@@ -77,7 +84,7 @@ public class Consulta extends JFrame implements ActionListener{
 		
 		catch(Exception ex)
 		{
-			showMessageDialog(this,ex.getMessage(),"Error",ERROR_MESSAGE);
+			showMessageDialog(this,ex.getMessage(),"Querry Error",ERROR_MESSAGE);
 			
 		}
 		
